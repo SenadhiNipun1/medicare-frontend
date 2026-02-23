@@ -26,3 +26,10 @@ export interface SalesOrderResponse {
   results: SalesOrder[];
   status_code: number;
 }
+
+export interface SingleSalesOrderResponse {
+  is_error: boolean;
+  message: string;
+  results: SalesOrder;  // NOT array
+  status_code: number;
+}

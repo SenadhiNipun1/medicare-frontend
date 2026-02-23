@@ -1,10 +1,33 @@
-import type { SalesOrderResponse } from "@/types/order.types";
+import type {
+  SalesOrderResponse,
+  SalesOrder,
+  SingleSalesOrderResponse
+} from "@/types/order.types";
 import { axiosInstance } from "./axios-instance";
 
-export async function getSalesOrders(): Promise<SalesOrderResponse> {
+export async function getSalesOrders(): Promise<SalesOrder[]> {
   const response = await axiosInstance.get<SalesOrderResponse>(
     "/v1/api/sales_order"
   );
 
-  return response.data;
+  return response.data.results;
 }
+
+export async function getSalesOrderById(
+  id: string
+): Promise<SalesOrder> {
+  const response = await axiosInstance.get<SingleSalesOrderResponse>(
+    `/v1/api/sales_order/${id}`
+  );
+
+  return response.data.results;
+}
+
+export async function deleteSalesOrder(
+  id: string
+): Promise<void> {
+  await axiosInstance.delete(
+    `/v1/api/sales_order/${id}`
+  );
+}
+

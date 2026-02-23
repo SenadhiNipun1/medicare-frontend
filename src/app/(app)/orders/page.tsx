@@ -29,9 +29,9 @@ export default function OrdersPage() {
     const fetchOrders = async () => {
       try {
         setLoading(true);
-        const response = await getSalesOrders();
-        setOrders(response.results);
-        console.log("ORDERS:", response.results);
+        const ordersData = await getSalesOrders();
+        setOrders(ordersData);
+        console.log("ORDERS:", ordersData);     
       } catch (err: any) {
         setError(err.message || "Failed to load orders");
       } finally {
@@ -96,12 +96,13 @@ export default function OrdersPage() {
           !error &&
           filteredOrders.map((order) => (
             <OrderCard
-              key={order.sales_order_id}
-              orderId={order.order_no}
-              status={order.order_status}
-              date={new Date(order.order_datetime).toLocaleDateString()}
-              priority={order.priority}
-              channel={order.order_channel}       
+                key={order.sales_order_id}
+                salesOrderId={order.sales_order_id}
+                orderNo={order.order_no}
+                status={order.order_status}
+                date={new Date(order.order_datetime).toLocaleDateString()}
+                priority={order.priority}
+                channel={order.order_channel}
             />
           ))}
 

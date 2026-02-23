@@ -15,4 +15,4 @@ const axiosInstance: AxiosInstance = axios.create({
         return config;
     }, error => Promise.reject(error));
 
-    export {axiosInstance};
+    export {axiosInstance};                                                                                                                                        

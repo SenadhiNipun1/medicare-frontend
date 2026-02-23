@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Eye } from "lucide-react";
@@ -5,7 +7,8 @@ import type { OrderStatus } from "@/types/order.types";
 import { useRouter } from "next/navigation";
 
 interface OrderCardProps {
-  orderId: string;
+  salesOrderId: string;   // required for routing
+  orderNo: string;
   status: OrderStatus;
   date: string;
   priority: string;
@@ -13,23 +16,26 @@ interface OrderCardProps {
 }
 
 export default function OrderCard({
-  orderId,
+  salesOrderId,
+  orderNo,
   status,
   date,
   priority,
   channel,
 }: OrderCardProps) {
+  const router = useRouter();
+
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 flex items-center justify-between transition hover:shadow-md">
       
       {/* Left Section */}
       <div>
         <h3 className="text-lg font-semibold text-gray-900">
-          {orderId}
+          {orderNo}
         </h3>
 
         <p className="text-sm text-gray-500 mt-1">
-          Channel: {channel} • Priority: {priority}
+          Channel: {channel || "N/A"} • Priority: {priority || "N/A"}
         </p>
       </div>
 
@@ -59,6 +65,7 @@ export default function OrderCard({
           variant="outline"
           size="sm"
           className="flex items-center gap-2 rounded-lg"
+          onClick={() => router.push(`/orders/${salesOrderId}`)}
         >
           <Eye size={16} />
           View
@@ -67,4 +74,3 @@ export default function OrderCard({
     </div>
   );
 }
-
