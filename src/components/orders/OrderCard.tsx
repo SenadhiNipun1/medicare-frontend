@@ -1,10 +1,11 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Eye } from "lucide-react";
-import type { OrderStatus } from "@/types/order.types";
 import { useRouter } from "next/navigation";
+
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import type { OrderStatus } from "@/types/order.types";
 
 interface OrderCardProps {
   salesOrderId: string;   // required for routing

@@ -3,13 +3,13 @@
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
+import { StatusDropdown } from "@/components/orders/status-dropdown";
 import { Button } from "@/components/ui/button";
 import {
   getSalesOrderById,
   deleteSalesOrder,
 } from "@/services/order.service";
 import type { SalesOrder } from "@/types/order.types";
-import { StatusDropdown } from "@/components/orders/status-dropdown";
 
 export default function OrderDetailPage() {
   const { id } = useParams();
@@ -22,16 +22,23 @@ export default function OrderDetailPage() {
 
   // ✅ Fetch Order (Reusable function)
   const fetchOrder = async () => {
-    try {
-      setLoading(true);
-      const data = await getSalesOrderById(id as string);
-      setOrder(data);
-    } catch (err: any) {
-      setError(err.message || "Failed to fetch order details");
-    } finally {
-      setLoading(false);
-    }
-  };
+  try {
+    setLoading(true);
+
+    const data = await getSalesOrderById(id as string);
+    setOrder(data);
+
+  } catch (err: unknown) {
+    const message =
+      err instanceof Error
+        ? err.message
+        : "Failed to fetch order details";
+
+    setError(message);
+  } finally {
+    setLoading(false);
+  }
+};
 
   // Initial load
   useEffect(() => {
@@ -53,8 +60,13 @@ export default function OrderDetailPage() {
       setDeleting(true);
       await deleteSalesOrder(order.sales_order_id);
       router.push("/orders");
-    } catch (err: any) {
-      alert(err.message || "Failed to delete order");
+    } catch (err: unknown) {
+      const message =
+        err instanceof Error
+          ? err.message
+          : "Failed to delete order";
+
+      alert(message);
     } finally {
       setDeleting(false);
     }

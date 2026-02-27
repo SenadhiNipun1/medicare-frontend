@@ -19,7 +19,6 @@ type Props = {
 
 export function StatusDropdown({
   orderId,
-  currentStatus,
   onStatusChange,
 }: Props) {
   const [loading, setLoading] = useState(false);
