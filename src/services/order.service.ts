@@ -1,9 +1,13 @@
+
+
 import type {
   SalesOrderResponse,
   SalesOrder,
   SingleSalesOrderResponse
 } from "@/types/order.types";
+
 import { axiosInstance } from "./axios-instance";
+
 
 export async function getSalesOrders(): Promise<SalesOrder[]> {
   const response = await axiosInstance.get<SalesOrderResponse>(
@@ -31,3 +35,14 @@ export async function deleteSalesOrder(
   );
 }
 
+export async function updateSalesOrderStatus(
+  id: string,
+  status: string
+): Promise<void> {
+  await axiosInstance.patch(
+    `/v1/api/sales_order/${id}`,
+    {
+      order_status: status,
+    }
+  );
+}
